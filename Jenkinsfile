@@ -23,9 +23,8 @@ pipeline{
         }
 
         //Aqui é a parte de Entrega Continua, CD.
-
         stage('Deploy Kubernetes'){
-            enviroment{
+            environment{
                 tag_version = "${env.BUILD_ID}"
             }
             steps{
