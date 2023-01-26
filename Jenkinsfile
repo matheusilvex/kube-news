@@ -2,6 +2,7 @@ pipeline{
     agent any
     
     stages{
+        //Aqui é a parte de CI, Integração Continua
         stage('Build Docker-Image'){
             steps{ 
                 script{
@@ -20,5 +21,19 @@ pipeline{
                 }
             }
         }
+
+        //Aqui é a parte de Entrega Continua, CD.
+
+        stage('Deploy Kubernetes'){
+            steps{
+                script{
+                    withKubeconfig([credentialsID: 'kubeconfig']){
+                        sh 'kubectl apply -f ./k8s/deployment.yaml'
+                    }
+                }
+            }
+        }
+
+
     }
 }
